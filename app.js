@@ -12,9 +12,6 @@ app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 
-
-let test = null;
-
 // Connect to the DB
 async function connect() {
   try {
@@ -38,7 +35,7 @@ async function insertTestUsers() {
 }
 
 app.get("/", (req, res) => {
-  res.send(`Hello World! Test value: ${test}`);
+  res.send('Hello World!');
 });
 
 app.get('/users', (req, res) => {
@@ -49,10 +46,6 @@ app.get('/users', (req, res) => {
   })
 })
 
-// Test database connection route
-app.get("/testdb", (req, res) => {
-  res.send(mongoose.connection)
-});
 
 // Export the Express API
 module.exports = app;
