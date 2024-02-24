@@ -12,13 +12,18 @@ app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 
+
+let test = null;
+
 // Connect to the DB
 async function connect() {
   try {
     await mongoose.connect(uri);
     console.log('Connected to MongoDB');
+    test = true;
   } catch (error) {
     console.error('Error connecting to MongoDB:', error);
+    test = false;
   }
 }
 connect();
@@ -31,8 +36,6 @@ async function insertTestUsers() {
   ]);
   console.log('Data inserted into "users" collection');
 }
-
-const test = true;
 
 app.get("/", (req, res) => {
   res.send(`Hello World! Test value: ${test}`);
