@@ -32,6 +32,12 @@ async function insertTestUsers() {
   console.log('Data inserted into "users" collection');
 }
 
+
+
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+
 app.get('/users', (req, res) => {
   UserModel.find({}).then((users) => {
     res.json(users);
