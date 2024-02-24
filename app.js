@@ -5,7 +5,7 @@ const port = process.env.PORT || 3000;
 const uri = 'mongodb+srv://joepklaassen9:6wsTVr93QUuDrKHs@cluster0.f3aro6x.mongodb.net/MotivationMentorDB?retryWrites=true&w=majority'
 
 /** Models */
-const UserModel = require('../models/userModel.js');
+const UserModel = require('./models/userModel.js');
 
 
 app.listen(port, () => {
