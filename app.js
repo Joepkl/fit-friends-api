@@ -51,11 +51,7 @@ app.get('/users', (req, res) => {
 
 // Test database connection route
 app.get("/testdb", (req, res) => {
-  if (mongoose.connection.readyState === 1) {
-    res.send("Database connection successful!");
-  } else {
-    res.status(500).send("Unable to establish database connection.");
-  }
+  res.send(mongoose.connection)
 });
 
 // Export the Express API
