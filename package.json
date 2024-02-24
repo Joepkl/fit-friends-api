@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "node --watch app.js"
+    "dev": "node --watch app.js",
+    "vercel-build": "echo hello"
   },
   "author": "",
   "license": "ISC",
