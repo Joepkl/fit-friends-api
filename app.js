@@ -39,12 +39,11 @@ app.get("/", (req, res) => {
 });
 
 app.get('/users', (req, res) => {
-  res.send("Hello users!");
-  // UserModel.find({}).then((users) => {
-  //   res.json(users);
-  // }).catch((err) => {
-  //   console.log(err);
-  // })
+  UserModel.find({}).then((users) => {
+    res.json(users);
+  }).catch((err) => {
+    console.log(err);
+  })
 })
 
 // Export the Express API
