@@ -35,7 +35,7 @@ async function insertTestUsers() {
 const test = true;
 
 app.get("/", (req, res) => {
-  res.send("Hello World!", test);
+  res.send(`Hello World! Test value: ${test}`);
 });
 
 app.get('/users', (req, res) => {
