@@ -32,10 +32,10 @@ async function insertTestUsers() {
   console.log('Data inserted into "users" collection');
 }
 
-
+const test = true;
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("Hello World!", test);
 });
 
 app.get('/users', (req, res) => {
