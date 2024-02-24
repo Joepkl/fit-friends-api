@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "node --watch app.js"
+    "dev": "node --watch api/app.js"
   },
   "author": "",
   "license": "ISC",
