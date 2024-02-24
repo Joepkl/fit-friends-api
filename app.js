@@ -46,6 +46,9 @@ app.get('/users', (req, res) => {
   })
 })
 
+// Export the Express API
+module.exports = app;
+
 
 
 
