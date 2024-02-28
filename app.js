@@ -20,6 +20,19 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
+/** Connect to MongoDB */
+async function connect() {
+  try {
+    await mongoose.connect(uri);
+    console.log("Connected to MongoDB");
+    test = true;
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error);
+    test = false;
+  }
+}
+connect();
+
 app.get("/users", (req, res) => {
   UserModel.find({})
     .then((users) => {
