@@ -101,7 +101,7 @@ function authenticateToken(req, res, next) {
 
   jwt.verify(token, "secret-key", (err, user) => {
     if (err) {
-      return res.sendStatus(403);
+      return res.status(403).json({ message: err });
     }
     req.user = user;
     next();
