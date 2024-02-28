@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const app = express();
 const port = process.env.PORT || 3000;
 const uri =
@@ -19,10 +21,8 @@ async function connect() {
   try {
     await mongoose.connect(uri);
     console.log("Connected to MongoDB");
-    test = true;
   } catch (error) {
     console.error("Error connecting to MongoDB:", error);
-    test = false;
   }
 }
 
