@@ -5,4 +5,19 @@
 // Usage: Middleware functions are used to perform tasks such as logging, authentication, input validation, and
 // other pre-processing tasks before the request reaches the route handler or controller.
 
+// Authenticate JWT
+function verifyAccessToken(req, res, next) {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  if (token == null) return res.sendStatus(401);
+
+  jwt.verify(token, secretKey, (err, user) => {
+    if (err) {
+      return res.status(403).json({ message: "Error while verifying token" });
+    }
+    req.user = user;
+    next();
+  });
+}
+
 module.exports = verifyAccessToken;

@@ -14,6 +14,7 @@ const UserModel = require("./models/userModel.js");
 /** Middleware */
 app.use(cors()); // Enable CORS for all routes
 app.use(express.json()); // Parse JSON request bodies
+const verifyAccessToken = require("./middleware/verifyAccessToken.js");
 
 // Use middleware for private routes
 // app.use('/api/profile', authMiddleware);
@@ -89,24 +90,9 @@ app.post("/login", async (req, res) => {
 });
 
 // Protect Route Example
-app.get("/protected", authenticateToken, (req, res) => {
+app.get("/protected", verifyAccessToken, (req, res) => {
   res.send("Protected route accessed");
 });
-
-// Middleware to authenticate JWT
-function authenticateToken(req, res, next) {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-  if (token == null) return res.sendStatus(401);
-
-  jwt.verify(token, secretKey, (err, user) => {
-    if (err) {
-      return res.status(403).json({ message: "Error while verifying token" });
-    }
-    req.user = user;
-    next();
-  });
-}
 
 /** Export the Express API for deployment with Vercel */
 module.exports = app;
