@@ -6,6 +6,7 @@
 // other pre-processing tasks before the request reaches the route handler or controller.
 
 const jwt = require("jsonwebtoken");
+const secretKey = process.env.SECRET_KEY;
 
 // Authenticate JWT
 function verifyAccessToken(req, res, next) {
@@ -13,13 +14,13 @@ function verifyAccessToken(req, res, next) {
   const token = authHeader && authHeader.split(" ")[1];
   if (token == null) return res.sendStatus(401);
 
-  // jwt.verify(token, secretKey, (err, user) => {
-  //   if (err) {
-  //     return res.status(403).json({ message: "Error while verifying token" });
-  //   }
-  //   req.user = user;
-  //   next();
-  // });
+  jwt.verify(token, secretKey, (err, user) => {
+    if (err) {
+      return res.status(403).json({ message: "Error while verifying token" });
+    }
+    req.user = user;
+    next();
+  });
   next();
 }
 
