@@ -1,64 +1,62 @@
-const express = require('express');
-const mongoose = require('mongoose');
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 3000;
-const uri = 'mongodb+srv://joepklaassen9:6wsTVr93QUuDrKHs@cluster0.f3aro6x.mongodb.net/MotivationMentorDB?retryWrites=true&w=majority'
+const uri =
+  "mongodb+srv://joepklaassen9:6wsTVr93QUuDrKHs@cluster0.f3aro6x.mongodb.net/MotivationMentorDB?retryWrites=true&w=majority";
 
 /** Models */
-const UserModel = require('./models/userModel.js');
-
+const UserModel = require("./models/userModel.js");
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 
+// Enable CORS for all routes
+app.use(cors());
+
 // Connect to the DB
 async function connect() {
   try {
     await mongoose.connect(uri);
-    console.log('Connected to MongoDB');
+    console.log("Connected to MongoDB");
     test = true;
   } catch (error) {
-    console.error('Error connecting to MongoDB:', error);
+    console.error("Error connecting to MongoDB:", error);
     test = false;
   }
 }
 connect();
 
-
 async function insertTestUsers() {
   await UserModel.insertMany([
-    { username: 'john_doe', password: '123', email: 'john.doe@example.com' },
-    { username: 'jane_smith',password: '123', email: 'jane.smith@example.com' }
+    { username: "john_doe", password: "123", email: "john.doe@example.com" },
+    {
+      username: "jane_smith",
+      password: "123",
+      email: "jane.smith@example.com",
+    },
   ]);
   console.log('Data inserted into "users" collection');
 }
 
 app.get("/", (req, res) => {
-  res.send('Hello World!');
+  res.send("Hello World!");
 });
 
-app.get('/users', (req, res) => {
-  UserModel.find({}).then((users) => {
-    res.json(users);
-  }).catch((err) => {
-    console.log(err);
-  })
-})
-
+app.get("/users", (req, res) => {
+  UserModel.find({})
+    .then((users) => {
+      res.json(users);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 
 // Export the Express API
 module.exports = app;
-
-
-
-
-
-
-
-
-
-
 
 /** Routes */
 // const userRoutes = require('./routes/user/userRoutes');
@@ -83,24 +81,6 @@ module.exports = app;
 // app.use('/api/auth', authRoutes);
 // app.use('/api/profile', userRoutes);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // const express = require("express");
 // const app = express();
 // const port = process.env.PORT || 3000;
@@ -116,7 +96,6 @@ module.exports = app;
 
 // // Serve static files from /public (e.g. HTML, CSS, JS)
 // // app.use(express.static(path.resolve('public')));
-
 
 // /** Example authentication */
 // const jwt = require('jsonwebtoken');
@@ -182,10 +161,6 @@ module.exports = app;
 //   // Check if the user exists in the simulated database based on the decoded information
 //   return users.some(user => user.id === decoded.id && user.username === decoded.username);
 // }
-
-
-
-
 
 /** Example POST request connected to DB */
 
