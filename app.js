@@ -9,21 +9,11 @@ const uri =
 /** Models */
 const UserModel = require("./models/userModel.js");
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+/** Middleware */
+app.use(cors()); // Enable CORS for all routes
+app.use(express.json()); // Parse JSON request bodies
 
-// Enable CORS for all routes
-app.use(cors());
-
-// Parse JSON request bodies
-app.use(express.json());
-
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-
-/** Connect to MongoDB */
+/** Establish connection to MongoDB */
 connect();
 async function connect() {
   try {
@@ -35,6 +25,14 @@ async function connect() {
     test = false;
   }
 }
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
+
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 
 app.get("/users", (req, res) => {
   UserModel.find({})
