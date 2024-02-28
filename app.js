@@ -15,6 +15,13 @@ const UserModel = require("./models/userModel.js");
 app.use(cors()); // Enable CORS for all routes
 app.use(express.json()); // Parse JSON request bodies
 
+// Use middleware for private routes
+// app.use('/api/profile', authMiddleware);
+
+// Mount routes
+// app.use('/api/auth', authRoutes);
+// app.use('/api/profile', userRoutes);
+
 /** Establish connection to MongoDB */
 connect();
 async function connect() {
@@ -28,10 +35,6 @@ async function connect() {
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
-});
-
-app.get("/", (req, res) => {
-  res.send("Hello World!");
 });
 
 app.get("/users", (req, res) => {
@@ -61,6 +64,27 @@ app.post("/register", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send("Error registering user");
+  }
+});
+
+// Login User
+app.post("/login", async (req, res) => {
+  try {
+    // Find the user by email
+    const user = await UserModel.findOne({ email: req.body.email });
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+    // Verify the password
+    if (!(await bcrypt.compare(req.body.password, user.password))) {
+      return res.status(401).send("Invalid password");
+    }
+    // Generate JWT
+    const token = jwt.sign({ _id: user._id }, "secret-key");
+    res.status(200).send({ token });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error logging in");
   }
 });
 
