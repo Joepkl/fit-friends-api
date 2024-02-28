@@ -88,5 +88,25 @@ app.post("/login", async (req, res) => {
   }
 });
 
+// Protect Route Example
+app.get("/protected", authenticateToken, (req, res) => {
+  res.send("Protected route accessed");
+});
+
+// Middleware to authenticate JWT
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  if (token == null) return res.sendStatus(401);
+
+  jwt.verify(token, "secret-key", (err, user) => {
+    if (err) {
+      return res.sendStatus(403);
+    }
+    req.user = user;
+    next();
+  });
+}
+
 /** Export the Express API for deployment with Vercel */
 module.exports = app;
