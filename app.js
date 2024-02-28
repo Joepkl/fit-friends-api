@@ -60,10 +60,10 @@ app.post("/register", async (req, res) => {
     });
     // Save the user to the database
     await user.save();
-    res.status(201).send("User registered successfully");
+    res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).send("Error registering user");
+    res.status(501).json({ message: "Error registering user" });
   }
 });
 
@@ -73,18 +73,18 @@ app.post("/login", async (req, res) => {
     // Find the user by email
     const user = await UserModel.findOne({ email: req.body.email });
     if (!user) {
-      return res.status(404).send("User not found");
+      return res.status(404).json({ message: "User not found" });
     }
     // Verify the password
     if (!(await bcrypt.compare(req.body.password, user.password))) {
-      return res.status(401).send("Invalid password");
+      return res.status(401).json({ message: "Invalid password" });
     }
     // Generate JWT
     const token = jwt.sign({ _id: user._id }, "secret-key");
-    res.status(200).send({ token });
+    res.status(200).json({ token });
   } catch (error) {
     console.error(error);
-    res.status(500).send("Error logging in");
+    res.status(500).json({ message: "Error logging in" });
   }
 });
 
