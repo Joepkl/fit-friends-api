@@ -99,9 +99,9 @@ function authenticateToken(req, res, next) {
   const token = authHeader && authHeader.split(" ")[1];
   if (token == null) return res.sendStatus(401);
 
-  jwt.verify(token, "secret-key", (err, user) => {
+  jwt.verify(token, secretKey, (err, user) => {
     if (err) {
-      return res.status(403).json({ message: err });
+      return res.status(403).json({ message: "Error while verifying token" });
     }
     req.user = user;
     next();
