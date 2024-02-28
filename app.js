@@ -15,7 +15,7 @@ const UserModel = require("./models/userModel.js");
 /** Middleware */
 app.use(cors()); // Enable CORS for all routes
 app.use(express.json()); // Parse JSON request bodies
-// const verifyAccessToken = require("./middleware/verifyAccessToken.js");
+const verifyAccessToken = require("./middleware/verifyAccessToken");
 
 // Use middleware for private routes
 // app.use('/api/profile', authMiddleware);
@@ -89,20 +89,6 @@ app.post("/login", async (req, res) => {
     res.status(500).json({ message: "Error logging in" });
   }
 });
-
-function verifyAccessToken(req, res, next) {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-  if (token == null) return res.sendStatus(401);
-
-  jwt.verify(token, secretKey, (err, user) => {
-    if (err) {
-      return res.status(403).json({ message: "Error while verifying token" });
-    }
-    req.user = user;
-    next();
-  });
-}
 
 // Protect Route Example
 app.get("/protected", verifyAccessToken, (req, res) => {
