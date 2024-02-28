@@ -5,8 +5,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const app = express();
 const port = process.env.PORT || 3000;
-const uri =
-  "mongodb+srv://joepklaassen9:6wsTVr93QUuDrKHs@cluster0.f3aro6x.mongodb.net/MotivationMentorDB?retryWrites=true&w=majority";
+const uri = `mongodb+srv://${process.env.DB_ADMIN}:${process.env.DB_ADMIN_PASSWORD}@cluster0.f3aro6x.mongodb.net/MotivationMentorDB?retryWrites=true&w=majority`;
+const secretKey = process.env.SECRET_KEY;
 
 /** Models */
 const UserModel = require("./models/userModel.js");
@@ -80,7 +80,7 @@ app.post("/login", async (req, res) => {
       return res.status(401).json({ message: "Invalid password" });
     }
     // Generate JWT
-    const token = jwt.sign({ _id: user._id }, "secret-key");
+    const token = jwt.sign({ _id: user._id }, secretKey);
     res.status(200).json({ token });
   } catch (error) {
     console.error(error);
