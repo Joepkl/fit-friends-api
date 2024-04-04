@@ -4,6 +4,5 @@ This is the API for the Fit Friends platform. This API receives requests from th
 
 **Tech stack:**
 
-
 - Node.js
 - Express.js
