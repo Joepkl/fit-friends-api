@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const app = express();
 const port = process.env.PORT || 3000;
-const uri = `mongodb+srv://${process.env.DB_ADMIN}:${process.env.DB_ADMIN_PASSWORD}@cluster0.f3aro6x.mongodb.net/MotivationMentorDB?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${process.env.DB_ADMIN}:${process.env.DB_ADMIN_PASSWORD}@cluster0.f3aro6x.mongodb.net/FitFriendsDB?retryWrites=true&w=majority`;
 const secretKey = process.env.SECRET_KEY;
 
 /** Models */
