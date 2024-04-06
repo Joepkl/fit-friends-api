@@ -57,7 +57,9 @@ app.post("/register", async (req, res) => {
       $or: [{ username: req.body.username }, { email: req.body.email }],
     });
     if (existingUser) {
-      return res.status(400).json({ message: "Username or email already exists" });
+      return res
+        .status(400)
+        .json({ message: "The username or email you provided is already registered. Please use a different one." });
     }
 
     // Hash the password
