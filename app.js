@@ -85,7 +85,7 @@ app.post("/login", async (req, res) => {
     // Find the user by email
     const user = await UserModel.findOne({ email: req.body.email });
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: "This username doesn't belong to any registered user." });
     }
     // Verify the password
     if (!(await bcrypt.compare(req.body.password, user.password))) {
