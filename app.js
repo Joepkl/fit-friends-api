@@ -89,7 +89,7 @@ app.post("/login", async (req, res) => {
     }
     // Verify the password
     if (!(await bcrypt.compare(req.body.password, user.password))) {
-      return res.status(401).json({ message: "Invalid password" });
+      return res.status(401).json({ message: "Invalid password." });
     }
     // Generate JWT
     const token = jwt.sign({ _id: user._id }, secretKey, { expiresIn: "1h" });
@@ -102,7 +102,7 @@ app.post("/login", async (req, res) => {
 
 // Protect Route Example
 app.get("/protected", verifyAccessToken, (req, res) => {
-  res.send("Protected route accessed");
+  res.send("Protected route accessed.");
 });
 
 /** Export the Express API for deployment with Vercel */
