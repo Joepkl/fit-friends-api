@@ -82,8 +82,16 @@ app.post("/register", async (req, res) => {
 // Login User
 app.post("/login", async (req, res) => {
   try {
-    // Find the user by username
-    const user = await UserModel.findOne({ username: req.body.username });
+    if (!req.body.username && !req.body.email) {
+      return res.status(400).json({ message: "Please provide a username or email." });
+    }
+    // Find the user by username or email
+    let user;
+    if (req.body.username) {
+      user = await UserModel.findOne({ username: req.body.username });
+    } else {
+      user = await UserModel.findOne({ email: req.body.email });
+    }
     if (!user) {
       return res.status(404).json({ message: "This username doesn't belong to any registered user." });
     }
