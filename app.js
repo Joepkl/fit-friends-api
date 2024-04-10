@@ -82,8 +82,8 @@ app.post("/register", async (req, res) => {
 // Login User
 app.post("/login", async (req, res) => {
   try {
-    // Find the user by email
-    const user = await UserModel.findOne({ email: req.body.email });
+    // Find the user by username
+    const user = await UserModel.findOne({ username: req.body.username });
     if (!user) {
       return res.status(404).json({ message: "This username doesn't belong to any registered user." });
     }
