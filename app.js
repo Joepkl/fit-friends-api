@@ -93,7 +93,8 @@ app.post("/login", async (req, res) => {
     }
     // Generate JWT
     const token = jwt.sign({ _id: user._id }, secretKey, { expiresIn: "1h" });
-    res.status(200).json({ token });
+    // Return user profile and JWT
+    res.status(200).json({ user, token });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error while logging in." });
