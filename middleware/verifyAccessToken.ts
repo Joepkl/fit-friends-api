@@ -10,8 +10,8 @@ import jwt from "jsonwebtoken";
 import { User } from "../models/userModel";
 const secretKey = process.env.SECRET_KEY as string;
 
-interface CustomRequest extends Request {
-  user: User;
+export interface CustomRequest extends Request {
+  user?: User;
 }
 
 function verifyAccessToken(req: CustomRequest, res: Response, next: NextFunction) {
@@ -31,4 +31,4 @@ function verifyAccessToken(req: CustomRequest, res: Response, next: NextFunction
   });
 }
 
-module.exports = verifyAccessToken;
+export default verifyAccessToken;
