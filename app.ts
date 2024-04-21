@@ -1,16 +1,20 @@
-require("dotenv").config();
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+import dotenv from "dotenv";
+import express from "express";
+import mongoose from "mongoose";
+import cors from "cors";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
+dotenv.config();
 const app = express();
+
+// Constants
 const port = process.env.PORT || 3000;
 const uri = `mongodb+srv://${process.env.DB_ADMIN}:${process.env.DB_ADMIN_PASSWORD}@cluster0.f3aro6x.mongodb.net/FitFriendsDB?retryWrites=true&w=majority`;
-const secretKey = process.env.SECRET_KEY;
+const secretKey = process.env.SECRET_KEY as string;
 
 /** Models */
-const UserModel = require("./models/userModel.js");
+import { UserModel } from "./models/userModel";
 
 /** Middleware */
 app.use(cors()); // Enable CORS for all routes
@@ -88,7 +92,8 @@ app.post("/login", async (req, res) => {
       return res.status(404).json({ message: "This username doesn't belong to any registered user." });
     }
     // Verify the password
-    if (!(await bcrypt.compare(req.body.password, user.password))) {
+    const passwordMatch = user.password && (await bcrypt.compare(req.body.password, user.password));
+    if (!passwordMatch) {
       return res.status(401).json({ message: "Invalid password." });
     }
     // Generate JWT
