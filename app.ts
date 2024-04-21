@@ -112,4 +112,4 @@ app.get("/protected", verifyAccessToken, (req, res) => {
 });
 
 /** Export the Express API for deployment with Vercel */
-module.exports = app;
+export default app;
