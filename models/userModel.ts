@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
   username: String,
   password: String,
   email: String,
+  settings: mongoose.Schema.Types.Mixed,
 });
 
 // Create a model based on the schema
@@ -16,4 +17,12 @@ export interface User {
   id: string;
   username: string;
   email: string;
+  settings: Settings;
+}
+
+export interface Settings {
+  age?: number | null;
+  bio?: string | null;
+  weeklyGoal: number;
+  shareData: boolean;
 }
