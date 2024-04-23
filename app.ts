@@ -15,13 +15,9 @@ const secretKey = process.env.SECRET_KEY as string;
 import appRoutes from "./routes/private/appRoutes";
 import authRoutes from "./routes/public/authRoutes";
 
-/** Models */
-import { UserModel } from "./models/userModel";
-
 /** Middleware */
 app.use(cors()); // Enable CORS for all routes
 app.use(express.json()); // Parse JSON request bodies
-import verifyAccessToken from "./middleware/verifyAccessToken";
 
 /** Establish connection to MongoDB */
 connect();
