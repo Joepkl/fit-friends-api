@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.get("/protected", verifyAccessToken, userController.protectedRoute);
 
-router.post("/settings", verifyAccessToken, userController.saveAccountSettings);
+router.post("/settings", userController.saveAccountSettings);
 
 export default router;
