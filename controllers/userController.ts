@@ -28,7 +28,7 @@ export async function registerUser(req: Request, res: Response) {
     });
     // Save the user to the database
     await user.save();
-    res.status(201).json({ message: "User registered successfully" });
+    res.status(201).json({ message: "User registered successfully." });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: `Error registering user: ${error}` });
@@ -61,6 +61,29 @@ export function protectedRoute(req: Request, res: Response) {
   res.send("Protected route accessed.");
 }
 
-export function saveAccountSettings(req: Request, res: Response) {
-  res.send("Account settings saved.");
+export async function saveAccountSettings(req: Request, res: Response) {
+  try {
+    // Find the user by username
+    const user = await UserModel.findOneAndUpdate(
+      { username: req.body.username },
+      {
+        $set: {
+          "settings.age": req.body.age,
+          "settings.bio": req.body.bio,
+          "settings.weeklyGoal": req.body.weeklyGoal,
+          "settings.shareData": req.body.shareData,
+        },
+      },
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    res.json({ message: "Account settings saved successfully.", user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error while saving account settings." });
+  }
 }
