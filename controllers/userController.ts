@@ -57,10 +57,6 @@ export async function loginUser(req: Request, res: Response) {
   }
 }
 
-export function protectedRoute(req: Request, res: Response) {
-  res.send("Protected route accessed.");
-}
-
 export async function saveAccountSettings(req: Request, res: Response) {
   try {
     // Find the user by username
@@ -85,5 +81,21 @@ export async function saveAccountSettings(req: Request, res: Response) {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error while saving account settings." });
+  }
+}
+
+export async function getUserProfile(req: Request, res: Response) {
+  try {
+    const username = req.params.username; // Assuming username is part of the URL
+    const user = await UserModel.findOne({ username });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    res.status(200).json({ user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error while fetching user profile." });
   }
 }
