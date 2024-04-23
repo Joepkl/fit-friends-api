@@ -60,3 +60,7 @@ export async function loginUser(req: Request, res: Response) {
 export function protectedRoute(req: Request, res: Response) {
   res.send("Protected route accessed.");
 }
+
+export function saveAccountSettings(req: Request, res: Response) {
+  res.send("Account settings saved.");
+}
