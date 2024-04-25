@@ -80,7 +80,7 @@ export async function saveAccountSettings(req: Request, res: Response) {
     res.json({ message: "Account settings saved successfully.", user });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Error while saving account settings." });
+    res.status(500).json({ message: `Error while saving account settings. ${error}` });
   }
 }
 
