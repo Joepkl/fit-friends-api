@@ -24,7 +24,7 @@ export async function registerUser(req: Request, res: Response) {
       username: req.body.username,
       email: req.body.email,
       password: hashedPassword,
-      settings: null,
+      settings: {},
     });
     // Save the user to the database
     await user.save();
