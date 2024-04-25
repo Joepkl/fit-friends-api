@@ -16,13 +16,15 @@ import appRoutes from "./routes/private/appRoutes";
 import authRoutes from "./routes/public/authRoutes";
 
 /** Middleware */
-app.use(
-  cors({
-    origin: "*", // Allow requests from any origin
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
+import allowCors from "./middleware/allowCors";
+app.use(allowCors);
+// app.use(
+//   cors({
+//     origin: "*", // Allow requests from any origin
+//     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+//     allowedHeaders: ["Content-Type", "Authorization"],
+//   })
+// );
 app.use(express.json()); // Parse JSON request bodies
 
 /** Establish connection to MongoDB */
