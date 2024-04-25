@@ -86,7 +86,7 @@ export async function saveAccountSettings(req: Request, res: Response) {
 
 export async function getUserProfile(req: Request, res: Response) {
   try {
-    const username = req.params.username; // Assuming username is part of the URL
+    const username = req.params.username;
     const user = await UserModel.findOne({ username });
 
     if (!user) {
