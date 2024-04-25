@@ -60,24 +60,27 @@ export async function loginUser(req: Request, res: Response) {
 export async function saveAccountSettings(req: Request, res: Response) {
   try {
     // Find the user by username
-    const user = await UserModel.findOneAndUpdate(
-      { username: req.body.username },
-      {
-        $set: {
-          "settings.age": req.body.age,
-          "settings.bio": req.body.bio,
-          "settings.weeklyGoal": req.body.weeklyGoal,
-          "settings.shareData": req.body.shareData,
-        },
-      },
-      { new: true }
-    );
+    let user = await UserModel.findOne({ username: req.body.username });
 
     if (!user) {
       return res.status(404).json({ message: "User not found." });
     }
 
-    res.json({ message: "Account settings saved successfully.", user });
+    // Initialize settings if it is null
+    if (user.settings === null) {
+      user.settings = {};
+    }
+
+    // Update the user's settings
+    user.settings.age = req.body.age;
+    user.settings.bio = req.body.bio;
+    user.settings.weeklyGoal = req.body.weeklyGoal;
+    user.settings.shareData = req.body.shareData;
+
+    // Save the updated user document
+    user = await user.save();
+
+    res.json({ message: "Account settings saved successfully." });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: `Error while saving account settings. ${error}` });
