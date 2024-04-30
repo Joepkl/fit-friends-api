@@ -26,7 +26,7 @@ export async function registerUser(req: Request, res: Response) {
       password: hashedPassword,
       settings: {},
       showcaseAchievements: [null, null, null],
-      personalGoals: [null, null, null],
+      personalGoals: [null],
     });
     // Save the user to the database
     await user.save();
