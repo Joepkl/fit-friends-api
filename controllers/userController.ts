@@ -27,6 +27,7 @@ export async function registerUser(req: Request, res: Response) {
       settings: {},
       showcaseAchievements: [null, null, null],
       personalGoals: [null, null, null],
+      weeklyConsistencyStreak: 0,
     });
     // Save the user to the database
     await user.save();
