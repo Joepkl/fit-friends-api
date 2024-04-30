@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
   showcaseAchievements: mongoose.Schema.Types.Mixed,
   personalGoals: mongoose.Schema.Types.Mixed,
   weeklyConsistencyStreak: Number,
+  status: Number,
 });
 
 // Create a model based on the schema
@@ -24,6 +25,7 @@ export interface User {
   showcaseAchievements: Array<Achievement | null>;
   personalGoals: Array<Achievement | null>;
   weeklyConsistencyStreak: number;
+  status: Number;
 }
 
 export interface Settings {
