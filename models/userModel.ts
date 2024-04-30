@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
   email: String,
   settings: mongoose.Schema.Types.Mixed,
   showcaseAchievements: mongoose.Schema.Types.Mixed,
+  personalGoals: mongoose.Schema.Types.Mixed,
 });
 
 // Create a model based on the schema
@@ -19,7 +20,8 @@ export interface User {
   username: string;
   email: string;
   settings: Settings;
-  showcaseAchievements: Achievement;
+  showcaseAchievements: Array<Achievement | null>;
+  personalGoals: Array<Achievement | null>;
 }
 
 export interface Settings {
