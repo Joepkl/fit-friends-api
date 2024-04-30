@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
   settings: mongoose.Schema.Types.Mixed,
   showcaseAchievements: mongoose.Schema.Types.Mixed,
   personalGoals: mongoose.Schema.Types.Mixed,
+  weeklyFrequency: Number,
   weeklyConsistencyStreak: Number,
   status: Number,
 });
@@ -24,6 +25,7 @@ export interface User {
   settings: Settings;
   showcaseAchievements: Array<Achievement | null>;
   personalGoals: Array<Achievement | null>;
+  weeklyFrequency: 0;
   weeklyConsistencyStreak: number;
   status: Number;
 }

@@ -27,6 +27,7 @@ export async function registerUser(req: Request, res: Response) {
       settings: {},
       showcaseAchievements: [null, null, null],
       personalGoals: [null, null, null],
+      weeklyFrequency: 0,
       weeklyConsistencyStreak: 0,
       status: 0,
     });
