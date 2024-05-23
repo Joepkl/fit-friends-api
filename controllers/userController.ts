@@ -105,3 +105,21 @@ export async function getUserProfile(req: Request, res: Response) {
     res.status(500).json({ message: "Error while fetching user profile." });
   }
 }
+
+export async function deleteAccount(req: Request, res: Response) {
+  try {
+    const username = req.params.username;
+    const user = await UserModel.findOne({ username: username });
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    // Delete the user
+    await UserModel.deleteOne({ username: username });
+
+    res.status(200).json({ message: "Account deleted successfully." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error while deleting account." });
+  }
+}
