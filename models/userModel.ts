@@ -34,6 +34,7 @@ export interface Settings {
   age?: number | null;
   bio?: string | null;
   weeklyGoal: number;
+  currentGym: Gym;
   shareData: boolean;
 }
 
@@ -41,4 +42,9 @@ export interface Achievement {
   category: number;
   achievement: number;
   level: number;
+}
+
+export interface Gym {
+  id: number;
+  name: string;
 }

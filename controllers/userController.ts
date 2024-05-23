@@ -72,6 +72,7 @@ export async function saveAccountSettings(req: Request, res: Response) {
           "settings.age": req.body.age,
           "settings.bio": req.body.bio,
           "settings.weeklyGoal": req.body.weeklyGoal,
+          "settings.currentGym": req.body.currentGym,
           "settings.shareData": req.body.shareData,
         },
       },
