@@ -139,7 +139,7 @@ export async function setAchievementShowcase(req: Request, res: Response) {
     const openSlots = user.showcaseAchievements.filter((a: any) => a === null).length;
 
     // Check if not exceeding max length of showcase achievements
-    if (openSlots > 0) {
+    if (openSlots === 0) {
       return res.status(400).json({ message: "Showcase already contains three achievements." });
     }
 
