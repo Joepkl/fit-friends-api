@@ -178,29 +178,56 @@ export async function deleteAccount(req: Request, res: Response) {
 //   }
 // }
 
+// export async function setAchievementShowcase(req: Request, res: Response) {
+//   try {
+//     const username = req.body.username;
+//     const newAchievement = req.body.achievement;
+
+//     const user = await UserModel.findOne({ username: username });
+
+//     if (!user) {
+//       return res.status(404).json({ message: "User not found." });
+//     }
+
+//     // Find the first free slot in showcaseAchievements array
+//     const freeSlotIndex = user.showcaseAchievements.findIndex((achievement: any) => achievement === null);
+
+//     if (freeSlotIndex === -1) {
+//       return res.status(400).json({ message: "Showcase already contains three achievements." });
+//     }
+
+//     // Add the new achievement to the first available slot
+//     user.showcaseAchievements[freeSlotIndex] = newAchievement;
+
+//     // Save the updated user document
+//     await user.save();
+
+//     res.status(200).json({ message: "Showcase achievement added successfully." });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Error while setting showcase achievement." });
+//   }
+// }
+
 export async function setAchievementShowcase(req: Request, res: Response) {
   try {
     const username = req.body.username;
     const newAchievement = req.body.achievement;
 
-    const user = await UserModel.findOne({ username: username });
+    const updatedUser = await UserModel.findOneAndUpdate(
+      {
+        username: username,
+        showcaseAchievements: { $elemMatch: { $eq: null } },
+      },
+      {
+        $set: { "showcaseAchievements.$": newAchievement },
+      },
+      { new: true }
+    );
 
-    if (!user) {
-      return res.status(404).json({ message: "User not found." });
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found or no free slots available." });
     }
-
-    // Find the first free slot in showcaseAchievements array
-    const freeSlotIndex = user.showcaseAchievements.findIndex((achievement: any) => achievement === null);
-
-    if (freeSlotIndex === -1) {
-      return res.status(400).json({ message: "Showcase already contains three achievements." });
-    }
-
-    // Add the new achievement to the first available slot
-    user.showcaseAchievements[freeSlotIndex] = newAchievement;
-
-    // Save the updated user document
-    await user.save();
 
     res.status(200).json({ message: "Showcase achievement added successfully." });
   } catch (error) {
