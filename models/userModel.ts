@@ -40,8 +40,9 @@ export interface Settings {
 
 export interface Achievement {
   category: number;
-  achievement: number;
+  id: number;
   level: number;
+  maxLevel: number;
 }
 
 export interface Gym {
