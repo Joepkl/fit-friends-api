@@ -110,6 +110,7 @@ export async function deleteAccount(req: Request, res: Response) {
   try {
     const username = req.params.username;
     const user = await UserModel.findOne({ username: username });
+
     if (!user) {
       return res.status(404).json({ message: "User not found." });
     }
@@ -121,5 +122,27 @@ export async function deleteAccount(req: Request, res: Response) {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error while deleting account." });
+  }
+}
+
+export async function setAchievementShowcase(req: Request, res: Response) {
+  try {
+    const username = req.body.username;
+    const achievements = req.body.achievements;
+
+    const updatedUser = await UserModel.findOneAndUpdate(
+      { username: username },
+      { $set: { showcaseAchievements: achievements } },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    res.status(200).json({ message: "Showcase achievements updated successfully." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error while setting showcase achievements." });
   }
 }
