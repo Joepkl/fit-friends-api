@@ -9,7 +9,8 @@ router.get("/user/:username", verifyAccessToken, userController.getUserProfile);
 router.delete("/user/:username", verifyAccessToken, userController.deleteAccount);
 
 /** Settings */
-router.post("/settings/showcase", verifyAccessToken, userController.setAchievementShowcase);
 router.post("/settings", verifyAccessToken, userController.saveAccountSettings);
+router.post("/settings/showcase", verifyAccessToken, userController.setAchievementShowcase);
+router.post("/settings/goals", verifyAccessToken, userController.setPersonalGoals);
 
 export default router;
