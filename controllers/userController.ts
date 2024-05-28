@@ -125,29 +125,51 @@ export async function deleteAccount(req: Request, res: Response) {
   }
 }
 
+// export async function setAchievementShowcase(req: Request, res: Response) {
+//   try {
+//     const username = req.body.username;
+//     const newAchievement = req.body.achievement;
+
+//     const user = await UserModel.findOne({ username: username });
+
+//     if (!user) {
+//       return res.status(404).json({ message: "User not found." });
+//     }
+
+//     const openSlots = user.showcaseAchievements.filter((a: any) => a === null).length;
+
+//     // Check if not exceeding max length of showcase achievements
+//     if (openSlots === 0) {
+//       return res.status(400).json({ message: "Showcase already contains three achievements." });
+//     }
+
+//     // Add the new achievement to the showcase
+//     user.showcaseAchievements.push(newAchievement);
+
+//     // Save the updated user document
+//     await user.save();
+
+//     res.status(200).json({ message: "Showcase achievement added successfully." });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Error while setting showcase achievement." });
+//   }
+// }
+
 export async function setAchievementShowcase(req: Request, res: Response) {
   try {
     const username = req.body.username;
     const newAchievement = req.body.achievement;
 
-    const user = await UserModel.findOne({ username: username });
+    const updatedUser = await UserModel.findOneAndUpdate(
+      { username: username },
+      { $push: { showcaseAchievements: newAchievement } },
+      { new: true }
+    );
 
-    if (!user) {
+    if (!updatedUser) {
       return res.status(404).json({ message: "User not found." });
     }
-
-    const openSlots = user.showcaseAchievements.filter((a: any) => a === null).length;
-
-    // Check if not exceeding max length of showcase achievements
-    if (openSlots === 0) {
-      return res.status(400).json({ message: "Showcase already contains three achievements." });
-    }
-
-    // Add the new achievement to the showcase
-    user.showcaseAchievements.push(newAchievement);
-
-    // Save the updated user document
-    await user.save();
 
     res.status(200).json({ message: "Showcase achievement added successfully." });
   } catch (error) {
