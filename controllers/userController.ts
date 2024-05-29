@@ -152,6 +152,38 @@ export async function setAchievementShowcase(req: Request, res: Response) {
   }
 }
 
+export async function deleteAchievementShowcase(req: Request, res: Response) {
+  try {
+    const username = req.body.username;
+    const achievementId = req.body.achievementId;
+    const achievementLevel = req.body.achievementLevel;
+
+    const updatedUser = await UserModel.findOneAndUpdate(
+      {
+        username: username,
+      },
+      {
+        $pull: {
+          showcaseAchievements: {
+            id: achievementId,
+            level: achievementLevel,
+          },
+        },
+      },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found or achievement not found." });
+    }
+
+    res.status(200).json({ message: "Showcase achievement deleted successfully." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error while deleting showcase achievement." });
+  }
+}
+
 export async function setPersonalGoals(req: Request, res: Response) {
   try {
     const username = req.body.username;
