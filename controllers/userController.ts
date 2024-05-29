@@ -161,13 +161,12 @@ export async function deleteAchievementShowcase(req: Request, res: Response) {
     const updatedUser = await UserModel.findOneAndUpdate(
       {
         username: username,
+        "showcaseAchievements.id": achievementId,
+        "showcaseAchievements.level": achievementLevel,
       },
       {
-        $pull: {
-          showcaseAchievements: {
-            id: achievementId,
-            level: achievementLevel,
-          },
+        $set: {
+          "showcaseAchievements.$": null,
         },
       },
       { new: true }
