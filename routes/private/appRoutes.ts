@@ -12,6 +12,7 @@ router.delete("/user/:username", verifyAccessToken, userController.deleteAccount
 router.post("/settings", verifyAccessToken, userController.saveAccountSettings);
 router.post("/settings/showcase", verifyAccessToken, userController.setAchievementShowcase);
 router.delete("/settings/showcase", verifyAccessToken, userController.deleteAchievementShowcase);
-router.post("/settings/goal", verifyAccessToken, userController.setPersonalGoals);
+router.post("/settings/goals", verifyAccessToken, userController.setPersonalGoals);
+router.delete("/settings/goals", verifyAccessToken, userController.deletePersonalGoal);
 
 export default router;

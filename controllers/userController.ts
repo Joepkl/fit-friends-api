@@ -209,3 +209,34 @@ export async function setPersonalGoals(req: Request, res: Response) {
     res.status(500).json({ message: "Error while setting personal goal." });
   }
 }
+
+export async function deletePersonalGoal(req: Request, res: Response) {
+  try {
+    const username = req.body.username;
+    const achievementId = req.body.achievementId;
+    const achievementLevel = req.body.achievementLevel;
+
+    const updatedUser = await UserModel.findOneAndUpdate(
+      {
+        username: username,
+        "personalGoals.id": achievementId,
+        "personalGoals.level": achievementLevel,
+      },
+      {
+        $set: {
+          "personalGoals.$": null,
+        },
+      },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found or achievement not found." });
+    }
+
+    res.status(200).json({ message: "Showcase achievement deleted successfully." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error while deleting showcase achievement." });
+  }
+}
