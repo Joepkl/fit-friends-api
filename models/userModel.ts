@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
   username: String,
   password: String,
   email: String,
+  points: Number,
   settings: mongoose.Schema.Types.Mixed,
   showcaseAchievements: mongoose.Schema.Types.Mixed,
   personalGoals: mongoose.Schema.Types.Mixed,
@@ -22,6 +23,7 @@ export interface User {
   id: string;
   username: string;
   email: string;
+  points: Number;
   settings: Settings;
   showcaseAchievements: Array<Achievement | null>;
   personalGoals: Array<Achievement | null>;

@@ -24,6 +24,7 @@ export async function registerUser(req: Request, res: Response) {
       username: req.body.username,
       email: req.body.email,
       password: hashedPassword,
+      points: 0,
       settings: {},
       showcaseAchievements: [null, null, null],
       personalGoals: [null, null, null],
